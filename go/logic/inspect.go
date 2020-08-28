@@ -492,7 +492,9 @@ func (this *Inspector) validateTableTriggers() error {
 	}
 	if numTriggers > 0 {
 		// Allows the triggers, since we tested gh-ost works well for our specific type of triggers, 
-		// Will add the trigger back before cutover.(Manually for now, should be automatic when finished copying, before cutover) 
+		// Will need to add the trigger back before cutover.(Manually for now, should be automatic when finished copying, before cutover) 
+		this.migrationContext.Log.Debugf("Found triggers on %s.%s. Will need to add the triggers back before cutover, so you have to use --postpone-cut-over-flag-file. ", sql.EscapeName(this.migrationContext.DatabaseName), sql.EscapeName(this.migrationContext.OriginalTableName))
+		return nil
 		
 		// return this.migrationContext.Log.Errorf("Found triggers on %s.%s. Triggers are not supported at this time. Bailing out", sql.EscapeName(this.migrationContext.DatabaseName), sql.EscapeName(this.migrationContext.OriginalTableName))
 	}
